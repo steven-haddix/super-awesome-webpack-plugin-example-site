@@ -8,10 +8,12 @@ module.exports = {
             entry: 'app',
             template,
             component: './src/components/Wrapper', // wrapper component that wraps each route component
-            pages: [
-                { route: '/home', component: './src/components/pages/Home' }
+            routes: [
+                { path: '/home', component: './src/components/pages/Home' }
             ],
-            reducers: { }
+            reducers: {
+                content: { content: {} }
+            }
         }
     ]
 };

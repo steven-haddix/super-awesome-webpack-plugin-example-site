@@ -11,7 +11,7 @@ const ENABLE_POLLING = process.env.ENABLE_POLLING;
 const PATHS = {
     app: path.join(__dirname, 'src'),
     style: [
-        path.join(__dirname, 'src', 'main.css')
+        path.join(__dirname, 'src', 'main.scss')
     ],
     build: path.join(__dirname, 'build'),
     test: path.join(__dirname, 'tests')
@@ -30,17 +30,26 @@ const common = merge(
         output: {
             path: PATHS.build,
             filename: '[name].js'
-            // TODO: Set publicPath to match your GitHub project name
-            // E.g., '/kanban-demo/'. Webpack will alter asset paths
-            // based on this. You can even use an absolute path here
-            // or even point to a CDN.
-            // publicPath: ''
         },
         resolve: {
             extensions: ['', '.js']
         },
         plugins: [
-            new SuperAwesomeWebpackPlugin(awesomeConfig, {})
+            new SuperAwesomeWebpackPlugin(awesomeConfig, {
+                module: {
+                    loaders: [
+                        // Extract CSS during build
+                        {
+                            test: /\.css$/,
+                            loaders: ['isomorphic-style', 'css']
+                        },
+                        {
+                            test: /\.scss$/,
+                            loaders: ['isomorphic-style', 'css!sass']
+                        }
+                    ]
+                }
+            })
         ]
     },
     parts.loadJSX(PATHS.app),
@@ -50,7 +59,7 @@ const common = merge(
 var config;
 
 // Detect how npm is run and branch based on that
-switch(TARGET) {
+switch (TARGET) {
     case 'build':
     case 'stats':
         config = merge(
@@ -76,7 +85,7 @@ switch(TARGET) {
                 entries: Object.keys(require('./package.json').dependencies)
             }),
             parts.minify(),
-            parts.extractCSS(PATHS.style)
+            parts.extractCSS(PATHS.style, '[name].[chunkhash].css')
         );
         break;
     case 'test':
@@ -99,7 +108,11 @@ switch(TARGET) {
                     style: PATHS.style
                 }
             },
-            parts.setupCSS(PATHS.style),
+            parts.extractBundle({
+                name: 'vendor',
+                entries: Object.keys(require('./package.json').dependencies)
+            }),
+            parts.extractCSS(PATHS.style, '[name].css'),
             parts.devServer({
                 // Customize host/port here if needed
                 host: process.env.HOST,

@@ -3,9 +3,11 @@ import React from 'react';
 export default React.createClass({
     render() {
         return (
-            <div>
-                Test
-            </div>
+            <section className="container">
+                <div className="home">
+                    Super Awesome Webpack Plugin Example
+                </div>
+            </section>
         );
     }
 });

@@ -63,7 +63,7 @@ exports.enableReactPerformanceTools = function() {
     };
 }
 
-exports.devServer = function(options) {
+exports.devServer = function (options) {
     const ret = {
         devServer: {
             // Enable history API fallback so HTML5 History API based
@@ -110,14 +110,21 @@ exports.devServer = function(options) {
     return ret;
 }
 
-exports.setupCSS = function(paths) {
+exports.setupCSS = function (paths) {
     return {
         module: {
-            loaders: [{
-                test: /\.css$/,
-                loaders: ['style', 'css'],
-                include: paths
-            }]
+            loaders: [
+                {
+                    test: /\.css$/,
+                    loaders: ['style', 'css'],
+                    include: paths
+                },
+                {
+                    test: /\.scss$/,
+                    loaders: ['style', 'css', 'sass'],
+                    include: paths
+                }
+            ]
         }
     };
 }
@@ -143,13 +150,13 @@ exports.setFreeVariable = function(key, value) {
     };
 }
 
-exports.extractBundle = function(options) {
+exports.extractBundle = function (options) {
     const entry = {};
     entry[options.name] = options.entries;
 
     return {
         // Define an entry point needed for splitting.
-        entry: entry,
+        entry,
         plugins: [
             // Extract bundle and manifest files. Manifest is
             // needed for reliable caching.
@@ -172,20 +179,25 @@ exports.clean = function(path) {
     };
 }
 
-exports.extractCSS = function(paths) {
+exports.extractCSS = function (paths, output) {
     return {
         module: {
             loaders: [
-                // Extract CSS during build
                 {
                     test: /\.css$/,
                     loader: ExtractTextPlugin.extract('style', 'css'),
                     include: paths
-                }]
+                },
+                {
+                    test: /\.scss$/,
+                    loader: ExtractTextPlugin.extract('style', 'css!sass'),
+                    include: paths
+                }
+            ]
         },
         plugins: [
             // Output extracted CSS to a file
-            new ExtractTextPlugin('[name].[chunkhash].css')]
+            new ExtractTextPlugin(output)]
     };
 }
 
