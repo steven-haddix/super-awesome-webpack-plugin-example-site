@@ -1,4 +1,7 @@
+import styleSheet from './node_modules/styled-components/lib/models/StyleSheet';
+
 export default function (assets) {
+    console.log(styleSheet.rules());
     return `
     <html lang="en">
         <head>
