@@ -1,7 +1,7 @@
 import styleSheet from './node_modules/styled-components/lib/models/StyleSheet';
 
 export default function (assets) {
-    console.log(styleSheet.rules());
+    const styles = styleSheet.rules().map(rule => rule.cssText).join('\n');
     return `
     <html lang="en">
         <head>
@@ -13,7 +13,6 @@ export default function (assets) {
                 window.__data = ${JSON.stringify(assets.state)};
             </script>
         </head>
-        <link rel="stylesheet" type="text/css" href="/${assets.webpack.style.replace('js', 'css')}" />
         <body id="body">
             <div id="app">
                 ${assets.html}

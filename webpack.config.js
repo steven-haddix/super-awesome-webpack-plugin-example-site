@@ -32,10 +32,17 @@ const common = merge(
             filename: '[name].js'
         },
         resolve: {
-            extensions: ['', '.js']
+            extensions: ['', '.js'],
+            modulesDirectories: ['src', 'node_modules']
         },
         plugins: [
             new SuperAwesomeWebpackPlugin(awesomeConfig, {
+                resolve: {
+                    modulesDirectories: ['src', 'node_modules']
+                },
+                externals: {
+                    'styled-components': path.join(process.cwd(), './node_modules/styled-components/lib')
+                },
                 module: {
                     loaders: [
                         // Extract CSS during build
@@ -119,8 +126,7 @@ switch (TARGET) {
                 port: process.env.PORT,
                 poll: ENABLE_POLLING
             }),
-            parts.enableReactPerformanceTools(),
-            parts.npmInstall()
+            parts.enableReactPerformanceTools()
         );
 }
 
