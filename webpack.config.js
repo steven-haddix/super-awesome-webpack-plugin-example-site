@@ -11,7 +11,8 @@ const ENABLE_POLLING = process.env.ENABLE_POLLING;
 const PATHS = {
     app: path.join(__dirname, 'src'),
     style: [
-        path.join(__dirname, 'src', 'main.scss')
+        path.join(__dirname, 'src', 'main.scss'),
+        path.join(__dirname, 'node_modules', 'normalize.css/normalize.css')
     ],
     build: path.join(__dirname, 'build'),
     test: path.join(__dirname, 'tests')

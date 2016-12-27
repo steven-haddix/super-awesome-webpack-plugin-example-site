@@ -1,15 +1,18 @@
-.wrapper {
+@import "~normalize.css/normalize.css";
 
+#app {
+  position: relative;
 }
 
-.header {
-
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.container {
-    margin: 20px 10px 0;
-}
-
-.home {
-
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, Link, browserHistory } from 'react-router';
-
 import Wrapper from './components/Wrapper';
 import Home from './components/pages/Home';
 

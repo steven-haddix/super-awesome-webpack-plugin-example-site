@@ -12,6 +12,10 @@ export default function (assets) {
             <script>
                 window.__data = ${JSON.stringify(assets.state)};
             </script>
+            <link rel="stylesheet" type="text/css" href="/${assets.webpack.style.replace('.js', '.css')}" media="screen" />
+            <style type="text/css">
+                ${styles}
+            </style>
         </head>
         <body id="body">
             <div id="app">
